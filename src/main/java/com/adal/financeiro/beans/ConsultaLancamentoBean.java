@@ -1,28 +1,28 @@
 package com.adal.financeiro.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityManager;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 import com.adal.financeiro.model.Lancamento;
 import com.adal.financeiro.repository.Lancamentos;
-import com.adal.financeiro.util.JpaUtil;
 
-@ManagedBean(name="consultaLancamentosBean")
+@ManagedBean(name="consultaLancamentoBean")
 @ViewScoped
-public class ConsultaLancamentoBean {
-
+public class ConsultaLancamentoBean implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private Lancamentos lancamentosRepository;
+	
 	private List<Lancamento> lancamentos;
 	
 	public void consultar() {
-		EntityManager manager = JpaUtil.getEntityManager();
-		Lancamentos lancamentos = new Lancamentos(manager);
-		
-		this.lancamentos = lancamentos.todos();
-		
-		manager.close();
+		this.lancamentos = lancamentosRepository.todos();
 	}
 
 	public List<Lancamento> getLancamentos() {

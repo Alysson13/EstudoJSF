@@ -2,6 +2,7 @@ package com.adal.financeiro.repository;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -11,6 +12,7 @@ public class Pessoas {
 
 	private EntityManager manager;
 	
+	@Inject
 	public Pessoas(EntityManager manager) {
 		this.manager = manager;
 	}

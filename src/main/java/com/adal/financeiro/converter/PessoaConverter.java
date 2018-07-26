@@ -4,30 +4,30 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.persistence.EntityManager;
 
 import com.adal.financeiro.model.Pessoa;
 import com.adal.financeiro.repository.Pessoas;
-import com.adal.financeiro.util.JpaUtil;
+import com.adal.financeiro.util.CDILocator;
 
 @FacesConverter(forClass = Pessoa.class)
 public class PessoaConverter implements Converter {
 
+	// @Inject (ainda não é suportado)
+	private Pessoas pessoas;
+	
+	public PessoaConverter() {
+		this.pessoas = CDILocator.getBean(Pessoas.class);
+	}
+	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Pessoa retorno = null;
-		EntityManager manager = JpaUtil.getEntityManager();
 		
-		try {
-			if (value != null) {
-				Pessoas pessoas = new Pessoas(manager);
-				retorno = pessoas.porId(new Long(value));
-			}
-			
-			return retorno;
-		} finally {
-			manager.close();
+		if (value != null) {
+			retorno = this.pessoas.porId(new Long(value));
 		}
+		
+		return retorno;
 	}
 	
 	@Override
