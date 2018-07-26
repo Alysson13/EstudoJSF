@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://xmlns.jcp.org/jsf/html"
+		xmlns:f="http://xmlns.jcp.org/jsf/core">
+		
+	<h:head>
+		<title>Calculadora</title>
+	</h:head>
+	
+	<h:body>
+		<h:form id="frm">
+			<h:messages showDetail="true" showSummary="false" />
+			
+			<h:inputText size="12" value="#{calculadoraBean.dataBase}" label="Data Base">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:inputText>
+			+
+			<h:inputText size="12" value="#{calculadoraBean.dias}" />
+			dias =
+			<h:outputText value="#{calculadoraBean.resultado}">
+				<f:convertDateTime dateStyle="full" locale="pt_BR"/>
+			</h:outputText>
+			<br />
+			
+			<h:commandButton value="Adicionar" action="#{calculadoraBean.adicionar}" />
+		</h:form>
+	</h:body>
+	
+</html>
