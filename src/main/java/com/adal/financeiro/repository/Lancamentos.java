@@ -18,7 +18,7 @@ public class Lancamentos {
 	}
 	
 	public List<Lancamento> todos(){
-		TypedQuery<Lancamento> query = manager.createQuery("select * from Lancamento", Lancamento.class);
+		TypedQuery<Lancamento> query = manager.createQuery("from Lancamento", Lancamento.class);
 		return query.getResultList();
 	}
 	
@@ -33,5 +33,17 @@ public class Lancamentos {
 				String.class);
 		query.setParameter("descricao", "%" + descricao + "%");
 		return query.getResultList();
+	}
+	
+	public Lancamento porId(Long id) {
+		return manager.find(Lancamento.class, id);
+	}
+	
+	public Lancamento guardar(Lancamento lancamento) {
+		return this.manager.merge(lancamento);
+	}
+	
+	public void remover(Lancamento lancamento) {
+		this.manager.remove(lancamento);
 	}
 }

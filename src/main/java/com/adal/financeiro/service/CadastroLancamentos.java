@@ -21,6 +21,18 @@ public class CadastroLancamentos {
 					"Data de pagamento não pode ser uma data futura.");
 		}
 		
-		this.lancamentos.adicionar(lancamento);
+		this.lancamentos.guardar(lancamento);
+	}
+	
+	@Transactional
+	public void excluir(Lancamento lancamento) throws NegocioException{
+		lancamento = this.lancamentos.porId(lancamento.getId());
+		
+		if (lancamento.getDataPagamento() != null) {
+			throw new NegocioException(
+					"Não é possível excluir um lançamento pago!");
+		}
+		
+		this.lancamentos.remover(lancamento);
 	}
 }
